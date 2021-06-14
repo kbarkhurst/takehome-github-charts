@@ -45,39 +45,23 @@ function axiosTest() {
 
 
 
-function vueData() {
-  return axios({
-    url: 'https://api.github.com/repos/vuejs/vue',
-    method: 'get',
-    timeout: 8000,
-    headers: {
-      'Content-Type': 'application/json',
-    }
-  })
-    .then(response => response.data)
-    .catch(error => console.error(error));
+async function vueData() {
+  const data = await axios.get("https://api.github.com/repos/vuejs/vue")
+  console.log("Vue Watchers:" + data.data.watchers);
+  return data;
+  // .then(function (response) {
+  //   console.log(response.data);
+  //   let vuewatcher = response.data.watchers;
+  //   document.getElementById("vuewatcher").innerHTML = vuewatcher;
+      
+  //   console.log("Vue.js Watchers:" + response.data.watchers);
+  //   return vuewatcher;
+  // this.vuewatcher = response.data.watchers;
+  // console.log("Vue.js Watchers2:" + vuewatcher);
+      
+      
 }
 vueData()
-  .then(
-    response => console.log('vueData' + response.data)
-  );
-  
-
-//     .get("https://api.github.com/repos/vuejs/vue")
-//     .then(function (response) {
-//       console.log(response.data);
-//       let vuewatcher = response.data.watchers;
-//       document.getElementById("vuewatcher").innerHTML = vuewatcher;
-      
-//       console.log("Vue.js Watchers:" + response.data.watchers);
-//       return vuewatcher;
-//       // this.vuewatcher = response.data.watchers;
-//       // console.log("Vue.js Watchers2:" + vuewatcher);
-      
-      
-//     });
-// }
-
 // window.doStuff = function() {
 //   vueData();
 //   console.log("From other function:" + vueData());
