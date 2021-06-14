@@ -1,17 +1,17 @@
 /* global Chart, axios */
 
 
-function axiosTest() {
-  // create a promise for the axios request
-  // const promise = axios.get("https://api.github.com/repos/vuejs/vue");
+// function axiosTest() {
+//   // create a promise for the axios request
+//   // const promise = axios.get("https://api.github.com/repos/vuejs/vue");
 
-  // using .then, create a new promise which extracts the data
-  // const dataPromise = promise.then((response) => response.data);
-  // console.log(response.data);
-  // // return it
-  // return dataPromise;
-  return axios.get("https://api.github.com/repos/vuejs/vue");
-}
+//   // using .then, create a new promise which extracts the data
+//   // const dataPromise = promise.then((response) => response.data);
+//   // console.log(response.data);
+//   // // return it
+//   // return dataPromise;
+//   return axios.get("https://api.github.com/repos/vuejs/vue");
+// }
 
 
 // now we can use that data from the outside!
@@ -46,9 +46,12 @@ function axiosTest() {
 
 
 async function vueData() {
-  const data = await axios.get("https://api.github.com/repos/vuejs/vue")
-  console.log("Vue Watchers:" + data.data.watchers);
-  return data;
+  const response = await axios.get("https://api.github.com/repos/vuejs/vue")
+  const data = await response;
+  console.log("vueData Vue Watchers:" + data.data.watchers);
+  let vuewatcher = response.data.watchers;
+  document.getElementById("vuewatcher").innerHTML = vuewatcher;
+  return data.data.watchers;
   // .then(function (response) {
   //   console.log(response.data);
   //   let vuewatcher = response.data.watchers;
@@ -61,7 +64,38 @@ async function vueData() {
       
       
 }
-vueData()
+async function showData() {
+  vueData()
+  let vueWatcher = await vueData()
+  const data = {
+    labels: [
+      'Vue',
+      'Angular',
+      'Ember'
+    ],
+    datasets: [{
+      label: 'Watchers',
+      data: [vueWatcher, 1000, 5000],
+      backgroundColor: [
+        'rgb(255, 99, 132)',
+        'rgb(54, 162, 235)',
+        'rgb(255, 205, 86)'
+      ],
+      hoverOffset: 4
+    }]
+  };
+ 
+  const config = {
+    type: 'pie',
+    data: data,
+  };
+  // === include 'setup' then 'config' above ===
+  var myChart = new Chart(
+    document.getElementById('myChart'),
+    config
+  );
+}
+showData()
 // window.doStuff = function() {
 //   vueData();
 //   console.log("From other function:" + vueData());
