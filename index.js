@@ -71,27 +71,27 @@ async function vueData() {
   return {
     chart: {
       vue: {
-        watchers: vueResponse.data.watchers,
+        watchers: vueResponse.data.subscribers_count,
         stars: vueResponse.data.stargazers_count,
         forks: vueResponse.data.forks,
       },
       angular: {
-        watchers: angularResponse.data.watchers,
+        watchers: angularResponse.data.subscribers_count,
         stars: angularResponse.data.stargazers_count,
         forks: angularResponse.data.forks,
       },
       emberjs: {
-        watchers: emberjsResponse.data.watchers,
+        watchers: emberjsResponse.data.subscribers_count,
         stars: emberjsResponse.data.stargazers_count,
         forks: emberjsResponse.data.forks,
       },
       svelte: {
-        watchers: svelteResponse.data.watchers,
+        watchers: svelteResponse.data.subscribers_count,
         stars: svelteResponse.data.stargazers_count,
         forks: svelteResponse.data.forks,
       },
       react: {
-        watchers: reactResponse.data.watchers,
+        watchers: reactResponse.data.subscribers_count,
         stars: reactResponse.data.stargazers_count,
         forks: reactResponse.data.forks,
       }
@@ -109,13 +109,13 @@ async function vueData() {
       
   }
 }
-  async function showData() {
-  
+  async function showData(input) {
+ 
     let info = await vueData()
     console.log(info);
-    // let vueWatcher = await vueData()
-    // let angularWatcher = await vueData()
-    // let emberjsWatcher = await vueData()
+    console.log(input);
+    document.getElementById(`${input}` + "title").innerHTML = `${input}`;
+    
     const data = {
       labels: [
         'Vue',
@@ -125,8 +125,8 @@ async function vueData() {
         'React'
       ],
       datasets: [{
-        label: 'Watchers',
-        data: [info.chart.vue.watchers, info.chart.angular.watchers, info.chart.emberjs.watchers, info.chart.svelte.watchers, info.chart.react.watchers],
+        
+        data: [info.chart.vue[input], info.chart.angular[input], info.chart.emberjs[input], info.chart.svelte[input], info.chart.react[input]],
         backgroundColor: [
           'rgb(255, 99, 132)',
           'rgb(54, 162, 235)',
@@ -156,10 +156,12 @@ async function vueData() {
     
     // === include 'setup' then 'config' above ===
     var myChart = new Chart(
-      document.getElementById('myChart'),
+      document.getElementById(`${input}`),
       config
     );
 };
     
  
-showData();
+showData("watchers");
+showData("forks");
+showData("stars");

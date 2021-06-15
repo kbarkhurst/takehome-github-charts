@@ -19,11 +19,27 @@ https://github.com/facebook/react -->
   </head>
   <body>
     <h1 style="text-align: center">Github Dashboard</h1>
+    <p style="text-align: center">
+      This dashboard visualizes the Forks, Watchers and Stars for popular frameworks on GitHub. Using vanilla
+      javascript, this project utilizes Axios and Chart.js to access the GitHub API and display these javascript repo's
+      engagement figures.
+    </p>
+    <p>
+      Make the numbers change. Head on over to a repo and add a Fork, Watch or Star: Vue, Angular, Ember, Svelte, React.
+    </p>
     <div style="width: 33%">
-      <h2 style="text-align: center">Watchers</h2>
-      <canvas id="myChart" width="400" height="400"></canvas>
+      <h2 style="text-align: center" id="forkstitle"></h2>
+      <canvas id="forks" width="400" height="400"></canvas>
     </div>
-    <div style="width: 33%"><canvas id="myChart" width="400" height="400"></canvas></div>
+
+    <div style="width: 33%">
+      <h2 style="text-align: center" id="watcherstitle"></h2>
+      <canvas id="watchers" width="400" height="400"></canvas>
+    </div>
+    <div style="width: 33%">
+      <h2 style="text-align: center" id="starstitle"></h2>
+      <canvas id="stars" width="400" height="400"></canvas>
+    </div>
     <h2>Vue</h2>
     <p>
       Watchers:
