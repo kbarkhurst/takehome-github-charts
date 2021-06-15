@@ -1,4 +1,5 @@
-/* global Chart, axios */
+/* global Chart, axios  */
+
 
 
 // function axiosTest() {
@@ -46,24 +47,27 @@
 
 
 async function vueData() {
-  const [vueResponse, angularResponse, emberjsResponse, svelteResponse] = await Promise.all([
+  const [vueResponse, angularResponse, emberjsResponse, svelteResponse, reactResponse] = await Promise.all([
     axios.get("https://api.github.com/repos/vuejs/vue"),
     axios.get("https://api.github.com/repos/angular/angular"),
     axios.get("https://api.github.com/repos/emberjs/ember"),
-    axios.get("https://api.github.com/repos/sveltejs/svelte")
+    axios.get("https://api.github.com/repos/sveltejs/svelte"),
+    axios.get("https://api.github.com/repos/facebook/react")
   ]);
-  const data = await [vueResponse, angularResponse, emberjsResponse, svelteResponse];
+  const data = await [vueResponse, angularResponse, emberjsResponse, svelteResponse, reactResponse];
   
 
   let vuewatcher = vueResponse.data.watchers;
   let angularwatcher = angularResponse.data.watchers;
   let emberjswatcher = emberjsResponse.data.watchers;
   let sveltejswatcher = svelteResponse.data.watchers;
+  let reactjswatcher = reactResponse.data.watchers;
   document.getElementById("vuewatcher").innerHTML = vuewatcher;
   document.getElementById("angularwatcher").innerHTML = angularwatcher;
   document.getElementById("emberjswatcher").innerHTML = emberjswatcher;
   document.getElementById("sveltejswatcher").innerHTML = sveltejswatcher;
-  
+  document.getElementById("reactjswatcher").innerHTML = reactjswatcher;
+
   return {
     chart: {
       vue: {
@@ -81,10 +85,15 @@ async function vueData() {
         stars: emberjsResponse.data.stargazers_count,
         forks: emberjsResponse.data.forks,
       },
-      svelts: {
+      svelte: {
         watchers: svelteResponse.data.watchers,
         stars: svelteResponse.data.stargazers_count,
         forks: svelteResponse.data.forks,
+      },
+      react: {
+        watchers: reactResponse.data.watchers,
+        stars: reactResponse.data.stargazers_count,
+        forks: reactResponse.data.forks,
       }
     }
     // .then(function (response) {
@@ -99,6 +108,7 @@ async function vueData() {
       
       
   }
+}
   async function showData() {
   
     let info = await vueData()
@@ -111,16 +121,18 @@ async function vueData() {
         'Vue',
         'Angular',
         'Ember',
-        'Svelte'
+        'Svelte',
+        'React'
       ],
       datasets: [{
         label: 'Watchers',
-        data: [info.chart.vue.watchers, info.chart.angular.watchers, info.chart.emberjs.watchers, info.chart.svelte.watchers],
+        data: [info.chart.vue.watchers, info.chart.angular.watchers, info.chart.emberjs.watchers, info.chart.svelte.watchers, info.chart.react.watchers],
         backgroundColor: [
           'rgb(255, 99, 132)',
           'rgb(54, 162, 235)',
           'rgb(255, 205, 86)',
           'rgb(255, 105, 86)',
+          'rgb(255, 30, 86)'
         ],
         hoverOffset: 4
       }]
@@ -129,12 +141,25 @@ async function vueData() {
     const config = {
       type: 'pie',
       data: data,
-    };
+      options: {
+        plugins: {
+          labels: {
+            render: 'value',
+            fontSize: 16,
+            fontStyle: 'bold',
+            fontColor: '#FFF',
+            fontFamily: '"Lucida Console", Monaco, monospace'
+          }
+        }
+      }
+    }
+    
     // === include 'setup' then 'config' above ===
     var myChart = new Chart(
       document.getElementById('myChart'),
       config
     );
-  };
-}
+};
+    
+ 
 showData();
