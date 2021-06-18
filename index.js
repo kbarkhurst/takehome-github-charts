@@ -165,3 +165,19 @@ async function vueData() {
 showData("watchers");
 showData("forks");
 showData("stars");
+
+
+function showText() {
+  var elem = document.getElementById('showText');
+  elem.classList.add('show');
+  document.getElementById('showPies').classList.remove("show");
+  document.getElementById('btn-showText').classList.add("active");
+  document.getElementById('btn-showPies').classList.remove("active");
+  
+}
+function showPies() {
+  document.getElementById('showText').classList.remove("show");
+  document.getElementById('btn-showText').classList.remove("active");
+  document.getElementById('showPies').classList.add("show");
+  document.getElementById('btn-showPies').classList.add("active");
+}
